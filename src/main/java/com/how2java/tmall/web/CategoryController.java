@@ -45,7 +45,7 @@ public class CategoryController {
         return null;
     }
     @PutMapping("/categories/{id}")
-    public Category editCategory(Category bean, MultipartFile image, HttpServletRequest request) throws Exception {
+    public Category updateCategory(Category bean, MultipartFile image, HttpServletRequest request) throws Exception {
         String name=request.getParameter("name");
         bean.setName(name);
         categoryService.edit(bean);
