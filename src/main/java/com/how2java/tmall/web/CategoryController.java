@@ -46,7 +46,7 @@ public class CategoryController {
     }
     @PutMapping("/categories/{id}")
     public Category updateCategory(Category bean, MultipartFile image, HttpServletRequest request) throws Exception {
-        String name=request.getParameter("name");
+        String name=request.getParameter("name");//PUT不能直接传name值？？？
         bean.setName(name);
         categoryService.edit(bean);
         if(image!=null){

@@ -17,4 +17,12 @@ public class AdminPageController {
     public String editCategory(){
         return "admin/editCategory";
     }
+    @GetMapping(value="/admin_property_list")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String listProperty(){
+        return "admin/listProperty";
+    }
+    @GetMapping(value="/admin_property_edit")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String editProperty(){
+        return "admin/editProperty";
+    }
 }
