@@ -25,4 +25,8 @@ public class AdminPageController {
     public String editProperty(){
         return "admin/editProperty";
     }
+    @GetMapping(value="/admin_user_list")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String listUser(){
+        return "admin/listUser";
+    }
 }
