@@ -10,14 +10,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service //标记这个类是 Service类
 public class CategoryService {
     @Autowired //自动装配 上个步骤的 CategoryDAO 对象
     CategoryDAO categoryDAO;
-    //    public List<Category> list() {
-//        Sort sort = new Sort(Sort.Direction.DESC, "id");//创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 categoryDAO进行查询
-//        return categoryDAO.findAll(sort);
-//    }
+        public List<Category> list() {
+        Sort sort = new Sort(Sort.Direction.DESC, "id");//创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 categoryDAO进行查询
+        return categoryDAO.findAll(sort);
+    }
     public Page4Navigator<Category> listCategory(int start, int size) throws Exception {
         Sort sort = new Sort(Sort.Direction.ASC, "id");
         Pageable pageable = new PageRequest(start, size, sort);

@@ -20,7 +20,7 @@ public class UserService {
     }
     public void add(User bean) {
         userDAO.save(bean);
-        System.out.println("userDAO--已经成功增加--"+bean.getName());
+        System.out.println("userDAO--已经成功增加--"+bean.getUsername());
     }
     public void delete(int id) {
         userDAO.delete(id);
@@ -33,6 +33,10 @@ public class UserService {
         //categoryDAO.getOne(id);
         User c=userDAO.findOne(id);
         return c;
+    }
+    public boolean isExist(String name) {
+        User user = userDAO.findByUsername(name);
+        return null!=user;
     }
 
 }

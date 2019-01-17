@@ -29,4 +29,8 @@ public class AdminPageController {
     public String listUser(){
         return "admin/listUser";
     }
+    @GetMapping(value="/login")
+    public String login(){
+        return "fore/login";
+    }
 }
