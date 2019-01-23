@@ -15,7 +15,7 @@ public class User {
     private int id;
 
     @Column(name = "name")//表明对应的数据库字段名
-    private String username;
+    private String name;
 
     @Column(name = "user_Property")//表明对应的数据库字段名
     private String user_Property;//用户属性
@@ -30,12 +30,12 @@ public class User {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String username) {
+        this.name = username;
     }
 
     public String getUser_Property() {
@@ -70,7 +70,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", user_Property='" + user_Property + '\'' +
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +

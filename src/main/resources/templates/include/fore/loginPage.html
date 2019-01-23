@@ -29,8 +29,9 @@
 	                    
 	                    axios.post(url,this.user).then(function(response) {
 	                    	var result = response.data;
+                            console.log(result);
 	                    	if(result.code==0){
-	                    		location.href="home";
+	                    		location.href="admin";
 	                    	}
 	                    	else{
 		    	                $("span.errorMessage").html(result.message);
@@ -61,7 +62,7 @@
 		<div class="simpleLogo">
 			<a th:href="${application.contextPath}"><img src="img/site/simpleLogo.png"></a>
 		</div>
-		<img id="loginBackgroundImg" class="loginBackgroundImg" src="img/site/loginBackground.jpg">
+		<img id="loginBackgroundImg" class="loginBackgroundImg" src="img/site/loginBackground.png">
 			<div id="loginSmallDiv" class="loginSmallDiv">
 				<div class="loginErrorMessageDiv">
 					<div class="alert alert-danger" >
