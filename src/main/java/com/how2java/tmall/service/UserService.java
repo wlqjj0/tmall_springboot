@@ -34,6 +34,10 @@ public class UserService {
         User c=userDAO.findOne(id);
         return c;
     }
+    public User getByName(String name) {
+        User c=userDAO.findByName(name);
+        return c;
+    }
     public boolean isExist(String name) {
         User user = userDAO.findByName(name);
         return null!=user;

@@ -33,4 +33,12 @@ public class AdminPageController {
     public String login(){
         return "fore/login";
     }
+    @GetMapping(value="/register")
+    public String register(){
+        return "fore/register";
+    }
+    @GetMapping(value="/registerSuccess")
+    public String registerSuccess(){
+        return "fore/registerSuccess";
+    }
 }
