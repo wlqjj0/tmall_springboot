@@ -1,9 +1,12 @@
 package com.how2java.tmall.web;
 
+
+
 import com.how2java.tmall.pojo.Category;
 import com.how2java.tmall.service.CategoryService;
 import com.how2java.tmall.util.ImageUtil;
 import com.how2java.tmall.util.Page4Navigator;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+@Log4j2
 @RestController//表示这是一个控制器，并且对每个方法的返回值都会直接转换为 json 数据格式。
 public class CategoryController {
     @Autowired//自动装配 CategoryService
@@ -27,6 +31,11 @@ public class CategoryController {
                                                  @RequestParam(value = "size", defaultValue = "8") int size) throws Exception {
         start = start<0?0:start;
         Page4Navigator<Category> page=categoryService.listCategory(start,size);
+        log.error("hhh哈哈哈Hi ! We have an Error. Hello World");
+        log.debug("Debugging log");
+        log.info("Info log");
+        log.warn("Hey, This is a warning!");
+        log.fatal("Damn! Fatal error. Please fix me.");
         return page;
     }
 
