@@ -1,8 +1,10 @@
 package com.how2java.tmall.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity //表示这是一个实体类
 @Table(name = "permission") //表示对应的表名是 category
@@ -21,6 +23,10 @@ public class Permission {
 
     @Column(name = "url")//表明对应的数据库字段名
     private String url;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "permissions")
+    private Set<Role> roles;
 
     public int getId() {
         return id;
@@ -54,6 +60,14 @@ public class Permission {
         this.url = url;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "Permission{" +
@@ -61,6 +75,7 @@ public class Permission {
                 ", name='" + name + '\'' +
                 ", desc_='" + desc_ + '\'' +
                 ", url='" + url + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }

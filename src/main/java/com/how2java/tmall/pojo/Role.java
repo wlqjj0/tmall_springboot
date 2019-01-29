@@ -25,6 +25,12 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
+    @ManyToMany
+    @JoinTable(name = "role_permission",
+            joinColumns = @JoinColumn(name = "rid",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "pid", referencedColumnName = "id") )
+    private Set<Permission> permissions;
+
     public int getId() {
         return id;
     }
@@ -57,12 +63,22 @@ public class Role {
         this.users = users;
     }
 
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", desc_='" + desc_ + '\'' +
+                ", users=" + users +
+                ", permissions=" + permissions +
                 '}';
     }
 }

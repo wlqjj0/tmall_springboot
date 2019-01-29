@@ -61,6 +61,7 @@
 		                <th>ID</th>
 		                <th>用户名称</th>
 						<th>属性</th>
+						<th>权限</th>
 		            </tr>
 		            </thead>
 		            <tbody>
@@ -70,6 +71,11 @@
 						    	{{bean.name}}
 						    </td>
 							<td>{{bean.desc_}}</td>
+							<td>
+								<div v-for="permission in bean.permissions ">
+									{{permission.desc_}}
+								</div>
+							</td>
 						</tr>
 		            </tbody>
 		        </table>
