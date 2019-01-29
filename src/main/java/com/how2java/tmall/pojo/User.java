@@ -4,6 +4,7 @@ package com.how2java.tmall.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity //表示这是一个实体类
 @Table(name = "user") //表示对应的表名是 category
@@ -17,14 +18,17 @@ public class User {
     @Column(name = "name")//表明对应的数据库字段名
     private String name;
 
-    @Column(name = "user_Property")//表明对应的数据库字段名
-    private String user_Property;//用户属性
-
     @Column(name = "password")//表明对应的数据库字段名
     private String password;
 
     @Column(name = "salt")
     private String salt;
+
+    @ManyToMany
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "uid",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "rid", referencedColumnName = "id") )
+    private Set<Role> roles;
 
     public int getId() {
         return id;
@@ -36,14 +40,6 @@ public class User {
 
     public void setName(String username) {
         this.name = username;
-    }
-
-    public String getUser_Property() {
-        return user_Property;
-    }
-
-    public void setUser_Property(String user_Property) {
-        this.user_Property = user_Property;
     }
 
     public String getPassword() {
@@ -66,12 +62,19 @@ public class User {
         this.id = id;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", user_Property='" + user_Property + '\'' +
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
                 '}';

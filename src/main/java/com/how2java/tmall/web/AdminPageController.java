@@ -29,6 +29,26 @@ public class AdminPageController {
     public String listUser(){
         return "admin/listUser";
     }
+    @GetMapping(value="/admin_user_edit")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String editUser(){
+        return "admin/editUser";
+    }
+    @GetMapping(value="/admin_role_list")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String listRole(){
+        return "admin/listRole";
+    }
+    @GetMapping(value="/admin_role_edit")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String editRole(){
+        return "admin/editRole";
+    }
+    @GetMapping(value="/admin_permission_list")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String listPermission(){
+        return "admin/listPermission";
+    }
+    @GetMapping(value="/admin_permission_edit")//访问地址 admin_property_list 就会访问 admin/listProperty.html 文件。
+    public String editPermission(){
+        return "admin/editPermission";
+    }
     @GetMapping(value="/login")
     public String login(){
         return "fore/login";
