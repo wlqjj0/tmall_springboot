@@ -78,7 +78,7 @@ public class Role {
                 ", name='" + name + '\'' +
                 ", desc_='" + desc_ + '\'' +
                 ", users=" + users +
-                ", permissions=" + permissions +
+
                 '}';
     }
 }

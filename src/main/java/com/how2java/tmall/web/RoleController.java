@@ -1,14 +1,15 @@
 package com.how2java.tmall.web;
 
 import com.how2java.tmall.pojo.Role;
-import com.how2java.tmall.pojo.User;
 import com.how2java.tmall.service.RoleService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Log4j2
 @RestController
 public class RoleController {
 
@@ -20,5 +21,25 @@ public class RoleController {
     public List<Role> list() throws Exception {
         return roleService.list();
     }
-
+    @PostMapping("/roles")
+    public Object add(@RequestBody Role bean) throws Exception{
+        roleService.add(bean);
+        return bean;
+    }
+    @DeleteMapping("/roles/{id}")
+    public String delete(@PathVariable("id") int id,HttpServletRequest request) throws Exception {
+        roleService.delete(id);
+        return null;
+    }
+    @PutMapping("/roles")
+    public Role update(@RequestBody Role bean) throws Exception {
+        roleService.edit(bean);
+        return bean;
+    }
+    @GetMapping("/roles/{id}")
+    public Role get(@PathVariable("id") int id) throws Exception {
+        Role bean=roleService.get(id);
+        log.debug("Debugging log"+bean);
+        return bean;
+    }
 }

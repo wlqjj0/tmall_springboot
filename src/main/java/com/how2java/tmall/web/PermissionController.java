@@ -4,12 +4,14 @@ import com.how2java.tmall.pojo.Permission;
 import com.how2java.tmall.pojo.User;
 import com.how2java.tmall.service.PermissionService;
 import com.how2java.tmall.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Log4j2
 @RestController
 public class PermissionController {
 
@@ -21,5 +23,25 @@ public class PermissionController {
     public List<Permission> list() throws Exception {
         return permissionService.list();
     }
-
+    @PostMapping("/permissions")
+    public Object add(@RequestBody Permission bean) throws Exception{
+        permissionService.add(bean);
+        return bean;
+    }
+    @DeleteMapping("/permissions/{id}")
+    public String delete(@PathVariable("id") int id,HttpServletRequest request) throws Exception {
+        permissionService.delete(id);
+        return null;
+    }
+    @PutMapping("/permissions")
+    public Permission update(@RequestBody Permission bean) throws Exception {
+        permissionService.edit(bean);
+        return bean;
+    }
+    @GetMapping("/permissions/{id}")
+    public Permission get(@PathVariable("id") int id) throws Exception {
+        Permission bean=permissionService.get(id);
+        log.debug("Debugging log"+bean);
+        return bean;
+    }
 }

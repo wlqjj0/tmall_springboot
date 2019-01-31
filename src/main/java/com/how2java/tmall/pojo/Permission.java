@@ -75,7 +75,7 @@ public class Permission {
                 ", name='" + name + '\'' +
                 ", desc_='" + desc_ + '\'' +
                 ", url='" + url + '\'' +
-                ", roles=" + roles +
+
                 '}';
     }
 }

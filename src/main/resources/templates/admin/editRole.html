@@ -7,10 +7,10 @@
 		<script>
 		    $(function(){
 		        var data4Vue = {
-						uri: 'properties',
-						listURL:'admin_property_list',
+						uri: 'roles',
+						listURL:'admin_role_list',
 		        		bean: '',
-		        		category:''
+		        		permission:''
 		    	};    	
 		        
 		        //ViewModel
@@ -26,7 +26,7 @@
 		                    var url = this.uri+"/"+id;
 		                    axios.get(url).then(function(response) {
 		                    	vue.bean = response.data;
-		                    	vue.category = vue.bean.category;
+		                    	vue.permission = vue.bean.permission;
                                 console.log(vue.bean);
 		                    })     
 		            	},
@@ -35,7 +35,7 @@
 		                		return;                		
 		                    var url = this.uri;
 		    				axios.put(url,vue.bean).then(function(response){
-		    					location.href=vue.listURL+"?cid="+vue.category.id;
+		    					location.href=vue.listURL+"?id="+vue.permission.id;
 		    				});
 		                }
 		            }
@@ -46,8 +46,8 @@
 		<div id="workingArea">
 		
 			<ol class="breadcrumb">
-			  <li><a href="admin_category_list">所有分类</a></li>
-			  <li><a :href="'admin_property_list?cid='+category.id">{{category.name}}</a></li>
+			  <li><a href="admin_role_list">所有角色</a></li>
+			  <li><a :href="'admin_role_list?id='+bean.id">{{bean.name}}</a></li>
 			  <li class="active">属性管理</li>
 			</ol>
 		
@@ -60,6 +60,14 @@
 							<tr>
 								<td>属性名称</td>
 								<td><input  @keyup.enter="update"  v-model.trim="bean.name" type="text" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>属性名称</td>
+								<td><input  @keyup.enter="update"  v-model.trim="bean.desc_" type="text" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>属性名称</td>
+								<td><input  @keyup.enter="update"  v-model.trim="bean.permissions.name" type="text" class="form-control"></td>
 							</tr>
 							<tr class="submitTR">
 								<td colspan="2" align="center">
