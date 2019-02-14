@@ -14,6 +14,7 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
@@ -61,12 +62,13 @@ public class ForeController {
         userService.add(user);
         return Result.success();
     }
-    @PostMapping("forelogin")
+
     /**
     * @RequestBody: 可将请求体中的JSON字符串绑定到相应的bean上
      * 前端用ajax发起请求
      * 把name和password绑定到userParam中
     */
+    @PostMapping("forelogin")
     public Object login(@RequestBody User userParam, HttpSession session){
        String name = userParam.getName();
        name = HtmlUtils.htmlEscape(name);
@@ -115,4 +117,20 @@ public class ForeController {
 //        }
 
     }
+    //前台判断是否登陆+shiro
+    @GetMapping("forecheckLogin")
+    public Object checkLogin(HttpSession session){
+        Subject subject = SecurityUtils.getSubject();
+        if(subject.isAuthenticated())
+
+//        User user = (User) session.getAttribute("user");
+//        if(null!=user)
+            return Result.success();
+        return Result.fail("用户未登录");
+    }
+//    @PostMapping("foresearch")
+//    public Object search(String keyword){
+//        List<Product> products = productService.search(keyword);
+//        return products;
+//    }
 }

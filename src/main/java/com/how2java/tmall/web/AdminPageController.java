@@ -61,4 +61,5 @@ public class AdminPageController {
     public String registerSuccess(){
         return "fore/registerSuccess";
     }
+
 }

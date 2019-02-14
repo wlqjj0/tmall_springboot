@@ -8,9 +8,13 @@
 		    $(function(){
 		        var data4Vue = {
 						uri: 'roles',
+                    	peruri:'permissions',
 						listURL:'admin_role_list',
 		        		bean: '',
-		        		permission:''
+		        		permission:'',
+                    	permissions_total:'',
+                        checkedes:true,
+						istrue:1
 		    	};    	
 		        
 		        //ViewModel
@@ -19,15 +23,25 @@
 		            data: data4Vue,
 		            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
 		            	this.get();
+                        this.list();
 		            },        
 		            methods: {
+                        list:function(){
+                            var url =  this.peruri;
+                            axios.get(url).then(function(response) {
+                                vue.pagination = response.data;
+                                vue.permissions_total = response.data;
+                                console.log(vue.permissions_total);
+                            });
+                        },
 		            	get:function(){        		
 		                    var id = getUrlParms("id");
 		                    var url = this.uri+"/"+id;
 		                    axios.get(url).then(function(response) {
 		                    	vue.bean = response.data;
-		                    	vue.permission = vue.bean.permission;
+		                    	vue.permission = vue.bean.permissions;
                                 console.log(vue.bean);
+                                console.log(vue.permission);
 		                    })     
 		            	},
 		            	update:function () {
@@ -37,7 +51,16 @@
 		    				axios.put(url,vue.bean).then(function(response){
 		    					location.href=vue.listURL+"?id="+vue.permission.id;
 		    				});
-		                }
+		                },
+						setcheckbox:function (a,b) {
+                            if(a==b){
+                                vue.checkedes=true;
+
+							}else
+                                vue.checkedes=false;
+                            console.log(vue.checkedes);
+                            return true;
+                        }
 		            }
 		        });    	
 		    });
@@ -48,26 +71,41 @@
 			<ol class="breadcrumb">
 			  <li><a href="admin_role_list">所有角色</a></li>
 			  <li><a :href="'admin_role_list?id='+bean.id">{{bean.name}}</a></li>
-			  <li class="active">属性管理</li>
+			  <li class="active">角色管理</li>
 			</ol>
 		
 		
 		
 			<div class="panel panel-warning editDiv">
-				<div class="panel-heading">编辑属性</div>
+				<div class="panel-heading">编辑角色</div>
 				<div class="panel-body">
 						<table class="editTable">
 							<tr>
-								<td>属性名称</td>
+								<td>角色</td>
 								<td><input  @keyup.enter="update"  v-model.trim="bean.name" type="text" class="form-control"></td>
 							</tr>
 							<tr>
-								<td>属性名称</td>
+								<td>名称</td>
 								<td><input  @keyup.enter="update"  v-model.trim="bean.desc_" type="text" class="form-control"></td>
 							</tr>
 							<tr>
-								<td>属性名称</td>
-								<td><input  @keyup.enter="update"  v-model.trim="bean.permissions.name" type="text" class="form-control"></td>
+								<td>拥有权限</td>
+								<td>
+									<div v-for="permissions in permissions_total "
+										 :key="permissions.id" >
+										<div v-for="role_permission in permission "
+											 :key="role_permission.id" >
+											<a v-if="permissions.id==role_permission.id">
+											</a>
+											<a v-else>
+											</a>
+										</div>
+										<div>
+											<input type="checkbox"  id="permissions.id"  v-model="checkedes">
+											<label for="permissions.id">{{permissions.desc_}}</label>
+										</div>
+									</div>
+								</td>
 							</tr>
 							<tr class="submitTR">
 								<td colspan="2" align="center">
