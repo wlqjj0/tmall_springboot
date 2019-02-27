@@ -5,13 +5,14 @@ import com.how2java.tmall.pojo.Property;
 import com.how2java.tmall.service.CategoryService;
 import com.how2java.tmall.service.PropertyService;
 import com.how2java.tmall.util.Page4Navigator;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-
+@Log4j2
 @RestController//表示这是一个控制器，并且对每个方法的返回值都会直接转换为 json 数据格式。
 public class PropertyController {
     @Autowired//自动装配 CategoryService
@@ -38,6 +39,7 @@ public class PropertyController {
     }
     @PutMapping("/properties")
     public Property update(@RequestBody Property bean) throws Exception {
+        log.info("PutMapping==="+bean);
         propertyService.edit(bean);
         return bean;
     }

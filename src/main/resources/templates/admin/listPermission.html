@@ -42,7 +42,9 @@
                             if(!checkEmpty(this.bean.name, "权限名称"))
                                 return;
                             var url = this.uri;
+                            console.log('this.bean=='+this.bean.id);
                             axios.post(url,this.bean).then(function(response){
+                                console.log('post.bean=='+vue.bean);
                                 vue.list(0);
                                 vue.bean = { id: 0, name: '',desc_:'',url:''};
                             });

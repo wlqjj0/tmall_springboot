@@ -25,6 +25,7 @@ public class PermissionController {
     }
     @PostMapping("/permissions")
     public Object add(@RequestBody Permission bean) throws Exception{
+        log.info("PostMapping===="+bean);
         permissionService.add(bean);
         return bean;
     }
@@ -36,6 +37,7 @@ public class PermissionController {
     @PutMapping("/permissions")
     public Permission update(@RequestBody Permission bean) throws Exception {
         permissionService.edit(bean);
+        log.info("PostMapping===="+bean);
         return bean;
     }
     @GetMapping("/permissions/{id}")

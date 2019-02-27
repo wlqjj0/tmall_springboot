@@ -15,7 +15,7 @@ public class PermissionService {
     PermissionDAO permissionDAO;
 
     public List<Permission> list() {
-        Sort sort = new Sort(Sort.Direction.DESC, "id");//创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 categoryDAO进行查询
+        Sort sort = new Sort(Sort.Direction.ASC, "id");//创建一个 Sort 对象，表示通过 id 正排序， 然后通过 categoryDAO进行查询
         return permissionDAO.findAll(sort);
     }
     public void add(Permission bean) {

@@ -7,16 +7,18 @@
 		<script>
 		    $(function(){
 		        var data4Vue = {
+
 						uri: 'roles',
                     	peruri:'permissions',
+                    	rpuri:'role_permissions',
 						listURL:'admin_role_list',
-		        		bean: '',
+		        		//rbean: { id: 0, name: '', desc_:''},
 		        		permission:'',
+                    	bean: { id: 0, name: '', desc_:''},
                     	permissions_total:'',
-                        checkedes:true,
-						istrue:1
-		    	};    	
-		        
+                        checked:[]
+		    	};
+
 		        //ViewModel
 		        var vue = new Vue({
 		            el: '#workingArea',
@@ -24,6 +26,7 @@
 		            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
 		            	this.get();
                         this.list();
+
 		            },        
 		            methods: {
                         list:function(){
@@ -42,24 +45,57 @@
 		                    	vue.permission = vue.bean.permissions;
                                 console.log(vue.bean);
                                 console.log(vue.permission);
+                                vue.setchecked(vue.permission);
 		                    })     
 		            	},
 		            	update:function () {
 		                	if(!checkEmpty(this.bean.name, "属性名称"))
-		                		return;                		
-		                    var url = this.uri;
+		                		return;
+                            var rpurl = this.rpuri;
+                            var url = this.uri;
 		    				axios.put(url,vue.bean).then(function(response){
-		    					location.href=vue.listURL+"?id="+vue.permission.id;
+		    					//location.href=vue.listURL+"?id="+vue.permission.id;
 		    				});
+		    				this.add(vue.bean.id);
 		                },
-						setcheckbox:function (a,b) {
-                            if(a==b){
-                                vue.checkedes=true;
+                        add: function (rid) {
+                            if(!checkEmpty(this.bean.name, "属性名称"))
+                                return;
+                            var rpurl = this.rpuri;
+                            this.bean.id=vue.bean.id;
+                            var formData = new FormData();
+                            formData.append("id",vue.bean.id);
+                            formData.append("checks",vue.checked);
+                            axios.post(rpurl,formData).then(function(response){
+                                location.href=vue.listURL+"?id="+vue.permission.id;
+                                vue.checked=null;
+                                console.log('postcheckedaxios=='+vue.checked+"//="+vue.bean.id);
+                            });
+                        },
+						postchecked:function (a,b) {
+                            console.log("postcheckedBBB=="+b);
+                            console.log("postcheckedAAA=="+a);
+                            // var rpurl = this.rpuri;
+                            // for(var i=0;i<b.length;i++){
+                            //     vue.bean.rid=a;
+                            //     vue.bean.pid=b[i];
+                            //     console.log("b[i]="+i+"="+b[i]);
+                            //     axios.post(rpurl,this.bean).then(function(response){
+                            //     	//location.href=vue.listURL+"?id="+vue.permission.id;
+                            //         console.log('postcheckedaxios=='+this.bean);
+                            //     });
+                            //
+                            // }
+                        },
+                        setchecked:function (a) {
+                            for(var i=0;i<a.length;i++){
+                                vue.checked[i]=a[i].id;
 
-							}else
-                                vue.checkedes=false;
-                            console.log(vue.checkedes);
-                            return true;
+							}
+							//vue.checkedes.$set(a);
+                            console.log("setchecked=="+vue.checked);
+                            console.log("setcheckedaaaaa=="+a);
+                            //return false;
                         }
 		            }
 		        });    	
@@ -91,20 +127,14 @@
 							<tr>
 								<td>拥有权限</td>
 								<td>
-									<div v-for="permissions in permissions_total "
-										 :key="permissions.id" >
-										<div v-for="role_permission in permission "
-											 :key="role_permission.id" >
-											<a v-if="permissions.id==role_permission.id">
-											</a>
-											<a v-else>
-											</a>
-										</div>
+									<div v-for="(permissions, index) in permissions_total "
+										 :key="index" >
 										<div>
-											<input type="checkbox"  id="permissions.id"  v-model="checkedes">
-											<label for="permissions.id">{{permissions.desc_}}</label>
+											<input type="checkbox"  id="permissions.id" :value="permissions.id" v-model="checked">
+											<label for="permissions.id">{{[permissions.id]}}{{permissions.desc_}}</label>
 										</div>
 									</div>
+									<span>已选中权限: {{ checked }}</span>
 								</td>
 							</tr>
 							<tr class="submitTR">

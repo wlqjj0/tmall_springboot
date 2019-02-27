@@ -41,6 +41,7 @@ public class CategoryController {
 
     @PostMapping("/categories")
     public Object add(Category bean, MultipartFile image, HttpServletRequest request) throws Exception{
+        log.info("addcategoriesbean="+bean+"//request="+request);
         categoryService.add(bean);
         saveOrUpdateImageFile(bean,image,request);
         return bean;

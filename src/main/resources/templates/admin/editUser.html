@@ -7,10 +7,14 @@
 		<script>
 		    $(function(){
 		        var data4Vue = {
-						uri: 'properties',
-						listURL:'admin_property_list',
+						uri: 'users',
+						listURL:'admin_user_list',
+                    	roleuri:'roles',
+                    	ururi:'user_roles',
 		        		bean: '',
-		        		category:''
+		        		roles:'',
+                    	role_total:'',
+                    	checked:[]
 		    	};    	
 		        
 		        //ViewModel
@@ -19,14 +23,26 @@
 		            data: data4Vue,
 		            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
 		            	this.get();
+                        this.list();
 		            },        
 		            methods: {
+                        list:function(){
+                            var url =  this.roleuri;
+                            axios.get(url).then(function(response) {
+                                vue.pagination = response.data;
+                                vue.role_total = response.data;
+                                console.log(vue.role_total);
+
+                            });
+                        },
 		            	get:function(){        		
 		                    var id = getUrlParms("id");
 		                    var url = this.uri+"/"+id;
 		                    axios.get(url).then(function(response) {
 		                    	vue.bean = response.data;
-		                    	vue.category = vue.bean.category;
+		                    	vue.roles = vue.bean.roles;
+                                console.log(vue.bean);
+                                vue.setchecked(vue.roles);
 		                    })     
 		            	},
 		            	update:function () {
@@ -34,9 +50,33 @@
 		                		return;                		
 		                    var url = this.uri;
 		    				axios.put(url,vue.bean).then(function(response){
-		    					location.href=vue.listURL+"?cid="+vue.category.id;
+		    					//location.href=vue.listURL+"?id="+vue.roles.id;
 		    				});
-		                }
+		    				this.add();
+		                },
+                        add: function () {
+                            if(!checkEmpty(this.bean.name, "属性名称"))
+                                return;
+                            var ururl = this.ururi;
+                            this.bean.id=vue.bean.id;
+                            var formData = new FormData();
+                            formData.append("id",vue.bean.id);
+                            formData.append("checks",vue.checked);
+                            axios.post(ururl,formData).then(function(response){
+                                location.href=vue.listURL+"?id="+vue.roles.id;
+                                vue.checked=null;
+                                console.log('postcheckedaxios=='+vue.checked+"//="+vue.bean.id);
+                            });
+                        },
+                        setchecked:function (a) {
+                            for(var i=0;i<a.length;i++){
+                                vue.checked[i]=a[i].id;
+                            }
+                            //vue.checkedes.$set(a);
+                            console.log("setchecked=="+vue.checked);
+                            console.log("setcheckedaaaaa=="+a);
+                            //return false;
+                        }
 		            }
 		        });    	
 		    });
@@ -45,20 +85,31 @@
 		<div id="workingArea">
 		
 			<ol class="breadcrumb">
-			  <li><a href="admin_category_list">所有分类</a></li>
-			  <li><a :href="'admin_property_list?cid='+category.id">{{category.name}}</a></li>
-			  <li class="active">属性管理</li>
+			  <li><a href="admin_user_list">所有用户</a></li>
+			  <li><a :href="'admin_user_list?id='+bean.id">{{bean.name}}</a></li>
+			  <li class="active">角色管理</li>
 			</ol>
-		
-		
-		
+
 			<div class="panel panel-warning editDiv">
-				<div class="panel-heading">编辑属性</div>
+				<div class="panel-heading">编辑角色</div>
 				<div class="panel-body">
 						<table class="editTable">
 							<tr>
-								<td>属性名称</td>
+								<td>角色名称</td>
 								<td><input  @keyup.enter="update"  v-model.trim="bean.name" type="text" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>拥有角色</td>
+								<td>
+									<div v-for="(permissions, index) in role_total "
+										 :key="index" >
+										<div>
+											<input type="checkbox"  id="permissions.id" :value="permissions.id" v-model="checked">
+											<label for="permissions.id">{{[permissions.id]}}{{permissions.desc_}}</label>
+										</div>
+									</div>
+									<span>已选中角色: {{ checked }}</span>
+								</td>
 							</tr>
 							<tr class="submitTR">
 								<td colspan="2" align="center">

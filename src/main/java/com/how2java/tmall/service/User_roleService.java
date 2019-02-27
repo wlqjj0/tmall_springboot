@@ -33,5 +33,21 @@ public class User_roleService {
         User_role c=user_roleDAO.findOne(id);
         return c;
     }
+    public void setRole(String s,String c[]) {
+        //String s=String.valueOf(bean.getId());
+        List<User_role> list=user_roleDAO.findByUid(s);
+        System.out.println("哈哈哈--"+list);
+        for (User_role rolePermission : list)
+            user_roleDAO.delete(rolePermission.getId());
+        //设置新的权限关系
+        if(null!=c)
+            for (String rid : c) {
+                User_role user_role=new User_role();
+                user_role.setUid(s+"");
+                user_role.setRid(rid+"");
+                user_roleDAO.save(user_role);
+
+            }
+    }
 
 }
