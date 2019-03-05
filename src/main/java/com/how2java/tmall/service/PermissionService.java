@@ -2,17 +2,25 @@ package com.how2java.tmall.service;
 
 import com.how2java.tmall.dao.PermissionDAO;
 import com.how2java.tmall.pojo.Permission;
+import com.how2java.tmall.pojo.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PermissionService {
 
     @Autowired
     PermissionDAO permissionDAO;
+    @Autowired
+    UserService userService;
+    @Autowired
+    RoleService roleService;
 
     public List<Permission> list() {
         Sort sort = new Sort(Sort.Direction.ASC, "id");//创建一个 Sort 对象，表示通过 id 正排序， 然后通过 categoryDAO进行查询
@@ -33,5 +41,33 @@ public class PermissionService {
         //categoryDAO.getOne(id);
         Permission c=permissionDAO.findOne(id);
         return c;
+    }
+    public boolean needInterceptor(String requestURI) {
+        List<Permission> ps = list();
+        for (Permission p : ps) {
+            if (p.getUrl().equals(requestURI))
+                return true;
+        }
+        return false;
+    }
+    public Set<String> listPermissionURLs(String userName) {
+        Set<String> result = new HashSet<>();
+//        List<Role> roles = roleService.listRoles(userName);
+//
+//        List<RolePermission> rolePermissions = new ArrayList<>();
+//
+//        for (Role role : roles) {
+//            RolePermissionExample example = new RolePermissionExample();
+//            example.createCriteria().andRidEqualTo(role.getId());
+//            List<RolePermission> rps = rolePermissionMapper.selectByExample(example);
+//            rolePermissions.addAll(rps);
+//        }
+//
+//        for (RolePermission rolePermission : rolePermissions) {
+//            Permission p = permissionMapper.selectByPrimaryKey(rolePermission.getPid());
+//            result.add(p.getUrl());
+//        }
+
+        return result;
     }
 }
