@@ -29,6 +29,7 @@ public class User {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "uid",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "rid", referencedColumnName = "id") )
+
     private Set<Role> roles;
 
     public int getId() {
@@ -66,7 +67,6 @@ public class User {
     public Set<Role> getRoles() {
         return roles;
     }
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }

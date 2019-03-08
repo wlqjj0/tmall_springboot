@@ -29,6 +29,7 @@ public class Role {
     @JoinTable(name = "role_permission",
             joinColumns = @JoinColumn(name = "rid",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pid", referencedColumnName = "id") )
+    //@JsonIgnore
     private Set<Permission> permissions;
 
     public int getId() {
@@ -63,10 +64,12 @@ public class Role {
         this.users = users;
     }
 
+    //@JsonIgnore
     public Set<Permission> getPermissions() {
         return permissions;
     }
 
+    //@JsonIgnore
     public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
     }

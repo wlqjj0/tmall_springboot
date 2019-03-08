@@ -24,8 +24,9 @@ public class Permission {
     @Column(name = "url")//表明对应的数据库字段名
     private String url;
 
-    @JsonIgnore
+
     @ManyToMany(mappedBy = "permissions")
+    @JsonIgnore
     private Set<Role> roles;
 
     public int getId() {

@@ -10,6 +10,8 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -22,6 +24,30 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfiguration {
+    /**
+     * could not initialize proxy - no Session
+     *
+     * 1、在方法上加@Transactional 注解，失败
+     * 2、在application.yml 文件加上jpa.properties.open-in-view: true 失败
+     * 3、在ResourceServerApplication.java 启动文件中加上：
+     *
+     *     @Bean
+     *     public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
+     *             return new OpenEntityManagerInViewFilter();
+     *     }
+     * 总结：
+     * 要解决no session 问题需要：
+     * 配置文件中加jpa.properties.open-in-view: true同时在启动文件中加@Bean
+     * ---------------------
+     * 作者：miskss
+     * 来源：CSDN
+     * 原文：https://blog.csdn.net/wanping321/article/details/79532918
+     * 版权声明：本文为博主原创文章，转载请附上博文链接！
+     */
+    @Bean
+    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
+        return new OpenEntityManagerInViewFilter();
+    }
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();

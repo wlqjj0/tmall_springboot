@@ -49,5 +49,8 @@ public class User_roleService {
 
             }
     }
+    public List<User_role> listUserRoles(String uid) {
+        return user_roleDAO.findByUid(uid);
+    }
 
 }

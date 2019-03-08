@@ -3,6 +3,7 @@ package com.how2java.tmall.service;
 import com.how2java.tmall.dao.PermissionDAO;
 import com.how2java.tmall.pojo.Permission;
 import com.how2java.tmall.pojo.Role;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Log4j2
 @Service
 public class PermissionService {
 
@@ -45,29 +47,28 @@ public class PermissionService {
     public boolean needInterceptor(String requestURI) {
         List<Permission> ps = list();
         for (Permission p : ps) {
+            log.info("Permission p ="+p.getUrl());
             if (p.getUrl().equals(requestURI))
                 return true;
         }
         return false;
     }
+    public Set<Permission> listPermissions(List<Role> roles) {
+        Set<Permission> permissions = new HashSet<>();
+        for (Role role : roles) {
+            for (Permission permission : role.getPermissions()){
+                permissions.add(permission);
+            }
+        }
+        return permissions;
+    }
     public Set<String> listPermissionURLs(String userName) {
         Set<String> result = new HashSet<>();
-//        List<Role> roles = roleService.listRoles(userName);
-//
-//        List<RolePermission> rolePermissions = new ArrayList<>();
-//
-//        for (Role role : roles) {
-//            RolePermissionExample example = new RolePermissionExample();
-//            example.createCriteria().andRidEqualTo(role.getId());
-//            List<RolePermission> rps = rolePermissionMapper.selectByExample(example);
-//            rolePermissions.addAll(rps);
-//        }
-//
-//        for (RolePermission rolePermission : rolePermissions) {
-//            Permission p = permissionMapper.selectByPrimaryKey(rolePermission.getPid());
-//            result.add(p.getUrl());
-//        }
-
+        List<Role> roles = roleService.listRoles(userName);
+        Set<Permission> listPermissions=listPermissions(roles);
+        for (Permission permission : listPermissions) {
+            result.add(permission.getUrl());
+        }
         return result;
     }
 }
