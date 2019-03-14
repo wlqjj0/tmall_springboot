@@ -1,7 +1,7 @@
 package com.how2java.tmall.service;
 
-import com.how2java.tmall.dao.CategoryDAO;
-import com.how2java.tmall.pojo.Category;
+import com.how2java.tmall.sqldao.Dbo_baserDAO;
+import com.how2java.tmall.sqlpojo.Dbo_baser;
 import com.how2java.tmall.util.Page4Navigator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,36 +14,35 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Log4j2
-@Service //标记这个类是 Service类
-public class CategoryService {
+@Service
+public class Dbo_baserService {
     @Autowired //自动装配 上个步骤的 CategoryDAO 对象
-    CategoryDAO categoryDAO;
-    public List<Category> list() {
+    Dbo_baserDAO dboBaserDAO;
+    public List<Dbo_baser> list() {
         Sort sort = new Sort(Sort.Direction.ASC, "id");//创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 categoryDAO进行查询
-        return categoryDAO.findAll(sort);
+        return dboBaserDAO.findAll(sort);
     }
-    public Page4Navigator<Category> listCategory(int start, int size) throws Exception {
-        Sort sort = new Sort(Sort.Direction.ASC, "id");
-        Pageable pageable = new PageRequest(start, size, sort);
+    public Page4Navigator<Dbo_baser> listDbobaser(int start, int size) throws Exception {
+        Sort sort1 = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest(start, size, sort1);
         log.info("pageable="+pageable);
-        Page page =categoryDAO.findAll(pageable);
+        Page page =dboBaserDAO.findAll(pageable);
         log.info("page="+page);
         return new Page4Navigator<>(page);
     }
-    public void add(Category bean) {
-        categoryDAO.save(bean);
+    public void add(Dbo_baser bean) {
+        dboBaserDAO.save(bean);
     }
     public void delete(int id) {
-        categoryDAO.delete(id);
+        dboBaserDAO.delete(id);
         System.out.println("已经成功删除--"+id);
     }
-    public void edit(Category bean) {
-        categoryDAO.save(bean);
+    public void edit(Dbo_baser bean) {
+        dboBaserDAO.save(bean);
     }
-    public Category get(int id) {
+    public Dbo_baser get(int id) {
         //categoryDAO.getOne(id);
-        Category c=categoryDAO.findOne(id);
+        Dbo_baser c=dboBaserDAO.findOne(id);
         return c;
     }
-
 }

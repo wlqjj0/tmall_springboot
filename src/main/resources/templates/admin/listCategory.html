@@ -24,12 +24,12 @@
                 //this.listCategory(0);
             },
             methods: {//list 函数使用 data4Vue里的 uri作为地址，然后调用 axios.js 这个 ajax库，进行异步调用。 调用成功之后，把服务端返回的数据，保存在 vue.beans 上
-                // list:function(){
-                //     var url =  this.uri;
-                //     axios.get(url).then(function(response) {
-                //         vue.beans = response.data;
-                //     });
-                // },
+                list1:function(){
+                    var url =  this.uri;
+                    axios.get(url).then(function(response) {
+                        vue.beans = response.data;
+                    });
+                },
                 list:function(start){
                     var url =  this.uri+ "?start="+start;
                     axios.get(url).then(function(response) {

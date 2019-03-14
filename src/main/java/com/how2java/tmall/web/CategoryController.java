@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
 
 @Log4j2
 @RestController//表示这是一个控制器，并且对每个方法的返回值都会直接转换为 json 数据格式。
@@ -27,7 +28,7 @@ public class CategoryController {
 //    public List<Category> list() throws Exception {
 //        return categoryService.list();
 //    }
-    public Page4Navigator<Category> listCategory(@RequestParam(value = "start", defaultValue = "0") int start,
+    public Page4Navigator<Category> listCategory(@RequestParam(value = "start", defaultValue = "1") int start,
                                                  @RequestParam(value = "size", defaultValue = "8") int size) throws Exception {
         start = start<0?0:start;
         Page4Navigator<Category> page=categoryService.listCategory(start,size);

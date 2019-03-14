@@ -61,5 +61,8 @@ public class AdminPageController {
     public String registerSuccess(){
         return "fore/registerSuccess";
     }
-
+    @GetMapping(value="/admin_dbobaser_list")//访问地址 admin_category_list 就会访问 admin/listCategory.html 文件。
+    public String listDbobaser(){
+        return "admin/listDbobaser";
+    }
 }
