@@ -23,7 +23,7 @@ public class Dbo_baserService {
         return dboBaserDAO.findAll(sort);
     }
     public Page4Navigator<Dbo_baser> listDbobaser(int start, int size) throws Exception {
-        Sort sort1 = new Sort(Sort.Direction.ASC, "id");
+        Sort sort1 = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(start, size, sort1);
         log.info("pageable="+pageable);
         Page page =dboBaserDAO.findAll(pageable);

@@ -65,6 +65,7 @@ public class ShiroConfiguration {
      */
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager){
+        openEntityManagerInViewFilter();
         ShiroFilterFactoryBean shiroFilterFactoryBean  = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);

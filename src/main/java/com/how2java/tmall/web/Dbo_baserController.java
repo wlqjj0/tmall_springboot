@@ -28,7 +28,7 @@ public class Dbo_baserController {
         Page4Navigator<Dbo_baser> page=dboBaserService.listDbobaser(start,size);
         log.error("hhh哈哈哈Hi ! We have an Error. Hello World");
         log.debug("Debugging log");
-        log.info("Info log");
+        log.info("page===="+page.getPageFromJPA());
         log.warn("Hey, This is a warning!");
         log.fatal("Damn! Fatal error. Please fix me.");
         return page;

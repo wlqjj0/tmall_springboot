@@ -19,8 +19,8 @@
 		            el: '#workingArea',
 		            data: data4Vue,
 		            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
-		            	//this.list(0);
-                        this.list(0);
+		            	this.list(0);
+                        //this.list1();
 		            },        
 		            methods: {
                         list1:function(){
@@ -116,6 +116,11 @@
 							<td>{{bean.zz}}</td>
 							<td>{{bean.gc}}</td>
 							<td>{{bean.ce}}</td>
+							<td>
+								<div v-for="cklist in bean.dboCklist ">
+									{{cklist.kind}}
+								</div>
+							</td>
 							<td>
 								<a :href="'admin_user_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
 							</td>
