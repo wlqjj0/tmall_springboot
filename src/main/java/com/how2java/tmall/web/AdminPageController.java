@@ -65,4 +65,8 @@ public class AdminPageController {
     public String listDbobaser(){
         return "admin/listDbobaser";
     }
+    @GetMapping(value="/admin_search_list")//访问地址 admin_category_list 就会访问 admin/listCategory.html 文件。
+    public String findLike(){
+        return "admin/listSearch";
+    }
 }

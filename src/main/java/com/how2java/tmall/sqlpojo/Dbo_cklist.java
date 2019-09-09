@@ -18,10 +18,10 @@ public class Dbo_cklist implements Serializable{
     private String kind;
 //    @Column(name = "tm")
 //    private String tm;
-//    @Column(name = "yg")
-//    private String yg;
-//    @Column(name = "rutm")
-//    private String rutm;
+    @Column(name = "yg")
+    private String yg;
+    @Column(name = "rutm")
+    private String rutm;
 //    @Column(name = "drz")
 //    private String drz;
 //    @Column(name = "ckid")
@@ -61,21 +61,21 @@ public class Dbo_cklist implements Serializable{
 //        this.tm = tm;
 //    }
 
-//    public String getYg() {
-//        return yg;
-//    }
-//
-//    public void setYg(String yg) {
-//        this.yg = yg;
-//    }
-//
-//    public String getRutm() {
-//        return rutm;
-//    }
-//
-//    public void setRutm(String rutm) {
-//        this.rutm = rutm;
-//    }
+    public String getYg() {
+        return yg;
+    }
+
+    public void setYg(String yg) {
+        this.yg = yg;
+    }
+
+    public String getRutm() {
+        return rutm;
+    }
+
+    public void setRutm(String rutm) {
+        this.rutm = rutm;
+    }
 //
 //    public String getDrz() {
 //        return drz;
@@ -106,7 +106,8 @@ public class Dbo_cklist implements Serializable{
         return "Dbo_cklist{" +
                 "id=" + id +
                 ", kind='" + kind + '\'' +
-                //", ckid='" + ckid + '\'' +
+                ", yg='" + yg + '\'' +
+                ", rutm='" + rutm + '\'' +
                 ", dboBaser=" + dboBaser +
                 '}';
     }

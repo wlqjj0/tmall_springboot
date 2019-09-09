@@ -47,7 +47,7 @@ public class PermissionService {
     public boolean needInterceptor(String requestURI) {
         List<Permission> ps = list();
         for (Permission p : ps) {
-            log.info("Permission p ="+p.getUrl());
+            //log.info("Permission p ="+p.getUrl());
             if (p.getUrl().equals(requestURI))
                 return true;
         }
